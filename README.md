@@ -26,12 +26,12 @@
 
 # Validating performance on SDGOD
 
-## Train Cauvis on 
+**Train**
 ```shell
 bash tools/dist_train.sh configs/dinov2/cauvis_dinov2_dinohead_bs1x4_sdgod.py 8 --work-dir ./work_dir/cauvis --find_unused_parameters
 ```
 
-## Test Cauvis on SDGOD
+**Test**
 ```shell
 bash dist_test.sh configs/dinov2/cauvis_dinov2_dinohead_bs1x4_sdgod.py path/to/your.pth 8 --work-dir ./work_dir
 ```
