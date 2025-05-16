@@ -1,0 +1,1549 @@
+2025/05/12 13:37:41 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.11.11 (main, Dec 11 2024, 16:28:39) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 2092864642
+    GPU 0,1,2,3,4,5,6,7: NVIDIA GeForce RTX 4090
+    CUDA_HOME: /usr/local/cuda-12.1
+    NVCC: Cuda compilation tools, release 12.1, V12.1.66
+    GCC: gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+    PyTorch: 2.2.0+cu121
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+    TorchVision: 0.17.0+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.5
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 2092864642
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/05/12 13:37:41 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=16)
+backend_args = None
+classes = 8
+data_root = '/mnt/datasets/Cityscapes/'
+dataset_type = 'CityscapesDataset'
+default_hooks = dict(
+    checkpoint=dict(interval=12, type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_scales = (
+    1024,
+    1024,
+)
+img_size = 1024
+launcher = 'none'
+load_from = '/mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/epoch_12.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+max_epochs = 12
+model = dict(
+    backbone=dict(
+        block_chunks=0,
+        cauvis_config=dict(
+            embed_dims=1024,
+            img_size=1024,
+            link_token_to_query=False,
+            num_layers=24,
+            patch_size=16,
+            token_length=1600,
+            type='Cauvis'),
+        depth=24,
+        embed_dim=1024,
+        ffn_bias=True,
+        ffn_layer='mlp',
+        img_size=1024,
+        init_cfg=dict(
+            checkpoint='checkpoints/dinov2_converted_1024.pth', type=None),
+        init_values=1e-05,
+        mlp_ratio=4,
+        num_heads=16,
+        patch_size=16,
+        proj_bias=True,
+        qkv_bias=True,
+        type='CauvisDINOv2'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_size_divisor=32,
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=[
+            1024,
+            1024,
+            1024,
+            1024,
+        ],
+        num_outs=5,
+        out_channels=256,
+        type='FPN'),
+    roi_head=dict(
+        bbox_head=dict(
+            bbox_coder=dict(
+                target_means=[
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                ],
+                target_stds=[
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                ],
+                type='DeltaXYWHBBoxCoder'),
+            fc_out_channels=1024,
+            in_channels=256,
+            loss_bbox=dict(loss_weight=1.0, type='L1Loss'),
+            loss_cls=dict(
+                loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=False),
+            num_classes=8,
+            reg_class_agnostic=False,
+            roi_feat_size=7,
+            type='Shared2FCBBoxHead'),
+        bbox_roi_extractor=dict(
+            featmap_strides=[
+                4,
+                8,
+                16,
+                32,
+            ],
+            out_channels=256,
+            roi_layer=dict(output_size=7, sampling_ratio=0, type='RoIAlign'),
+            type='SingleRoIExtractor'),
+        type='StandardRoIHead'),
+    rpn_head=dict(
+        anchor_generator=dict(
+            ratios=[
+                0.5,
+                1.0,
+                2.0,
+            ],
+            scales=[
+                8,
+            ],
+            strides=[
+                4,
+                8,
+                16,
+                32,
+                64,
+            ],
+            type='AnchorGenerator'),
+        bbox_coder=dict(
+            target_means=[
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+            ],
+            target_stds=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            type='DeltaXYWHBBoxCoder'),
+        feat_channels=256,
+        in_channels=256,
+        loss_bbox=dict(loss_weight=1.0, type='L1Loss'),
+        loss_cls=dict(
+            loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=True),
+        type='RPNHead'),
+    test_cfg=dict(
+        rcnn=dict(
+            max_per_img=100,
+            nms=dict(iou_threshold=0.5, type='nms'),
+            score_thr=0.05),
+        rpn=dict(
+            max_per_img=1000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=1000)),
+    train_cfg=dict(
+        rcnn=dict(
+            assigner=dict(
+                ignore_iof_thr=-1,
+                match_low_quality=False,
+                min_pos_iou=0.5,
+                neg_iou_thr=0.5,
+                pos_iou_thr=0.5,
+                type='MaxIoUAssigner'),
+            debug=False,
+            pos_weight=-1,
+            sampler=dict(
+                add_gt_as_proposals=True,
+                neg_pos_ub=-1,
+                num=512,
+                pos_fraction=0.25,
+                type='RandomSampler')),
+        rpn=dict(
+            allowed_border=-1,
+            assigner=dict(
+                ignore_iof_thr=-1,
+                match_low_quality=True,
+                min_pos_iou=0.3,
+                neg_iou_thr=0.3,
+                pos_iou_thr=0.7,
+                type='MaxIoUAssigner'),
+            debug=False,
+            pos_weight=-1,
+            sampler=dict(
+                add_gt_as_proposals=False,
+                neg_pos_ub=-1,
+                num=256,
+                pos_fraction=0.5,
+                type='RandomSampler')),
+        rpn_proposal=dict(
+            max_per_img=1000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=2000)),
+    type='FasterRCNN')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=0.1, norm_type=2),
+    optimizer=dict(lr=0.0001, type='AdamW', weight_decay=0.0001),
+    paramwise_cfg=dict(custom_keys=dict(backbone=dict(lr_mult=0.1))),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=12,
+        gamma=0.1,
+        milestones=[
+            11,
+        ],
+        type='MultiStepLR'),
+]
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='annotations/instancesonly_filtered_gtFine_val.json',
+        backend_args=None,
+        data_prefix=dict(img='leftImg8bit/val/'),
+        data_root='/mnt/datasets/Cityscapes/',
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                2048,
+                1024,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CityscapesDataset'),
+    drop_last=False,
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file=
+    '/mnt/datasets/Cityscapes/annotations/instancesonly_filtered_gtFine_val.json',
+    backend_args=None,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        2048,
+        1024,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=12, type='EpochBasedTrainLoop', val_interval=12)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=1,
+    dataset=dict(
+        ann_file='annotations/instancesonly_filtered_gtFine_train.json',
+        backend_args=None,
+        data_prefix=dict(img='leftImg8bit/train/'),
+        data_root='/mnt/datasets/Cityscapes/',
+        filter_cfg=dict(filter_empty_gt=False, min_size=32),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(keep_ratio=False, scale=(
+                1024,
+                1024,
+            ), type='Resize'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackDetInputs'),
+        ],
+        type='CityscapesDataset'),
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_per_gpu_batch_size = 1
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(keep_ratio=False, scale=(
+        1024,
+        1024,
+    ), type='Resize'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='annotations/instancesonly_filtered_gtFine_val.json',
+        backend_args=None,
+        data_prefix=dict(img='leftImg8bit/val/'),
+        data_root='/mnt/datasets/Cityscapes/',
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                2048,
+                1024,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        type='CityscapesDataset'),
+    drop_last=False,
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file=
+    '/mnt/datasets/Cityscapes/annotations/instancesonly_filtered_gtFine_val.json',
+    backend_args=None,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '/mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/'
+
+2025/05/12 13:37:43 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/05/12 13:37:43 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2025/05/12 13:37:45 - mmengine - WARNING - The prefix is not set in metric class DumpResults.
+2025/05/12 13:37:47 - mmengine - INFO - Load checkpoint from /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/epoch_12.pth
+2025/05/12 13:38:15 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5713  data_time: 0.0084  memory: 2402  
+2025/05/12 13:38:43 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5513  data_time: 0.0023  memory: 2402  
+2025/05/12 13:39:10 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5520  data_time: 0.0024  memory: 2402  
+2025/05/12 13:39:38 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5522  data_time: 0.0024  memory: 2402  
+2025/05/12 13:40:06 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5522  data_time: 0.0023  memory: 2402  
+2025/05/12 13:40:33 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5522  data_time: 0.0022  memory: 2402  
+2025/05/12 13:41:01 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5529  data_time: 0.0023  memory: 2402  
+2025/05/12 13:41:29 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5533  data_time: 0.0023  memory: 2402  
+2025/05/12 13:41:56 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5540  data_time: 0.0025  memory: 2402  
+2025/05/12 13:42:24 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5542  data_time: 0.0024  memory: 2402  
+2025/05/12 13:42:24 - mmengine - INFO - Evaluating bbox...
+2025/05/12 13:42:29 - mmengine - INFO - bbox_mAP_copypaste: 0.243 0.546 0.173 0.063 0.211 0.394
+2025/05/12 13:42:30 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 13:42:30 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2430  coco/bbox_mAP_50: 0.5460  coco/bbox_mAP_75: 0.1730  coco/bbox_mAP_s: 0.0630  coco/bbox_mAP_m: 0.2110  coco/bbox_mAP_l: 0.3940  data_time: 0.0030  time: 0.5546
+2025/05/12 13:42:59 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5649  data_time: 0.0133  memory: 2402  
+2025/05/12 13:43:27 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 13:43:54 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 13:44:22 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 13:44:50 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 13:45:17 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 13:45:45 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 13:46:13 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5550  data_time: 0.0027  memory: 2402  
+2025/05/12 13:46:41 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 13:47:08 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0024  memory: 2402  
+2025/05/12 13:47:09 - mmengine - INFO - Evaluating bbox...
+2025/05/12 13:47:14 - mmengine - INFO - bbox_mAP_copypaste: 0.172 0.380 0.140 0.020 0.115 0.330
+2025/05/12 13:47:14 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 13:47:14 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1720  coco/bbox_mAP_50: 0.3800  coco/bbox_mAP_75: 0.1400  coco/bbox_mAP_s: 0.0200  coco/bbox_mAP_m: 0.1150  coco/bbox_mAP_l: 0.3300  data_time: 0.0037  time: 0.5554
+2025/05/12 13:47:44 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5640  data_time: 0.0124  memory: 2402  
+2025/05/12 13:48:11 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 13:48:39 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5536  data_time: 0.0025  memory: 2402  
+2025/05/12 13:49:07 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5540  data_time: 0.0026  memory: 2402  
+2025/05/12 13:49:34 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 13:50:02 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 13:50:30 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5552  data_time: 0.0027  memory: 2402  
+2025/05/12 13:50:58 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5555  data_time: 0.0027  memory: 2402  
+2025/05/12 13:51:25 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 13:51:53 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5551  data_time: 0.0024  memory: 2402  
+2025/05/12 13:51:53 - mmengine - INFO - Evaluating bbox...
+2025/05/12 13:51:59 - mmengine - INFO - bbox_mAP_copypaste: 0.123 0.278 0.101 0.008 0.065 0.261
+2025/05/12 13:51:59 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 13:51:59 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1230  coco/bbox_mAP_50: 0.2780  coco/bbox_mAP_75: 0.1010  coco/bbox_mAP_s: 0.0080  coco/bbox_mAP_m: 0.0650  coco/bbox_mAP_l: 0.2610  data_time: 0.0036  time: 0.5555
+2025/05/12 13:52:28 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5657  data_time: 0.0137  memory: 2402  
+2025/05/12 13:52:56 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5544  data_time: 0.0030  memory: 2402  
+2025/05/12 13:53:24 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5555  data_time: 0.0034  memory: 2402  
+2025/05/12 13:53:52 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5566  data_time: 0.0041  memory: 2402  
+2025/05/12 13:54:20 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5556  data_time: 0.0032  memory: 2402  
+2025/05/12 13:54:47 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5562  data_time: 0.0035  memory: 2402  
+2025/05/12 13:55:15 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5586  data_time: 0.0039  memory: 2402  
+2025/05/12 13:55:43 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5584  data_time: 0.0045  memory: 2402  
+2025/05/12 13:56:11 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5584  data_time: 0.0046  memory: 2402  
+2025/05/12 13:56:39 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5582  data_time: 0.0042  memory: 2402  
+2025/05/12 13:56:39 - mmengine - INFO - Evaluating bbox...
+2025/05/12 13:56:45 - mmengine - INFO - bbox_mAP_copypaste: 0.071 0.145 0.064 0.004 0.020 0.165
+2025/05/12 13:56:45 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 13:56:45 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0710  coco/bbox_mAP_50: 0.1450  coco/bbox_mAP_75: 0.0640  coco/bbox_mAP_s: 0.0040  coco/bbox_mAP_m: 0.0200  coco/bbox_mAP_l: 0.1650  data_time: 0.0048  time: 0.5578
+2025/05/12 13:57:15 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:15  time: 0.5672  data_time: 0.0142  memory: 2402  
+2025/05/12 13:57:43 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5543  data_time: 0.0028  memory: 2402  
+2025/05/12 13:58:10 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5542  data_time: 0.0028  memory: 2402  
+2025/05/12 13:58:38 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5543  data_time: 0.0027  memory: 2402  
+2025/05/12 13:59:06 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 13:59:34 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 14:00:01 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 14:00:29 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 14:00:57 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5556  data_time: 0.0026  memory: 2402  
+2025/05/12 14:01:25 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5556  data_time: 0.0025  memory: 2402  
+2025/05/12 14:01:25 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:01:28 - mmengine - INFO - bbox_mAP_copypaste: 0.017 0.039 0.013 0.000 0.002 0.036
+2025/05/12 14:01:28 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:01:28 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0170  coco/bbox_mAP_50: 0.0390  coco/bbox_mAP_75: 0.0130  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0020  coco/bbox_mAP_l: 0.0360  data_time: 0.0038  time: 0.5560
+2025/05/12 14:01:57 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5656  data_time: 0.0138  memory: 2402  
+2025/05/12 14:02:25 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5553  data_time: 0.0034  memory: 2402  
+2025/05/12 14:02:53 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5558  data_time: 0.0033  memory: 2402  
+2025/05/12 14:03:21 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5561  data_time: 0.0035  memory: 2402  
+2025/05/12 14:03:49 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5562  data_time: 0.0035  memory: 2402  
+2025/05/12 14:04:16 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5558  data_time: 0.0031  memory: 2402  
+2025/05/12 14:04:44 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5561  data_time: 0.0032  memory: 2402  
+2025/05/12 14:05:12 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5562  data_time: 0.0031  memory: 2402  
+2025/05/12 14:05:40 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5572  data_time: 0.0034  memory: 2402  
+2025/05/12 14:06:08 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5570  data_time: 0.0031  memory: 2402  
+2025/05/12 14:06:08 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:06:08 - mmengine - INFO - bbox_mAP_copypaste: 0.000 0.000 0.000 0.000 0.000 0.000
+2025/05/12 14:06:08 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:06:08 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0000  coco/bbox_mAP_50: 0.0000  coco/bbox_mAP_75: 0.0000  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0000  coco/bbox_mAP_l: 0.0000  data_time: 0.0043  time: 0.5571
+2025/05/12 14:06:38 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:18  time: 0.5751  data_time: 0.0217  memory: 2402  
+2025/05/12 14:07:06 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5559  data_time: 0.0032  memory: 2402  
+2025/05/12 14:07:34 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5555  data_time: 0.0030  memory: 2402  
+2025/05/12 14:08:02 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5554  data_time: 0.0029  memory: 2402  
+2025/05/12 14:08:30 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5558  data_time: 0.0029  memory: 2402  
+2025/05/12 14:08:57 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5556  data_time: 0.0026  memory: 2402  
+2025/05/12 14:09:25 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5560  data_time: 0.0026  memory: 2402  
+2025/05/12 14:09:53 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5563  data_time: 0.0027  memory: 2402  
+2025/05/12 14:10:21 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5566  data_time: 0.0027  memory: 2402  
+2025/05/12 14:10:49 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5567  data_time: 0.0026  memory: 2402  
+2025/05/12 14:10:49 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:10:54 - mmengine - INFO - bbox_mAP_copypaste: 0.188 0.431 0.136 0.022 0.140 0.343
+2025/05/12 14:10:55 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:10:55 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1880  coco/bbox_mAP_50: 0.4310  coco/bbox_mAP_75: 0.1360  coco/bbox_mAP_s: 0.0220  coco/bbox_mAP_m: 0.1400  coco/bbox_mAP_l: 0.3430  data_time: 0.0047  time: 0.5579
+2025/05/12 14:11:24 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:18  time: 0.5735  data_time: 0.0214  memory: 2402  
+2025/05/12 14:11:52 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5542  data_time: 0.0027  memory: 2402  
+2025/05/12 14:12:20 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5540  data_time: 0.0026  memory: 2402  
+2025/05/12 14:12:47 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5544  data_time: 0.0026  memory: 2402  
+2025/05/12 14:13:15 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5545  data_time: 0.0027  memory: 2402  
+2025/05/12 14:13:43 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5547  data_time: 0.0025  memory: 2402  
+2025/05/12 14:14:11 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 14:14:38 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5556  data_time: 0.0026  memory: 2402  
+2025/05/12 14:15:06 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5558  data_time: 0.0026  memory: 2402  
+2025/05/12 14:15:34 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5556  data_time: 0.0025  memory: 2402  
+2025/05/12 14:15:34 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:15:40 - mmengine - INFO - bbox_mAP_copypaste: 0.144 0.323 0.116 0.011 0.086 0.290
+2025/05/12 14:15:40 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:15:40 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1440  coco/bbox_mAP_50: 0.3230  coco/bbox_mAP_75: 0.1160  coco/bbox_mAP_s: 0.0110  coco/bbox_mAP_m: 0.0860  coco/bbox_mAP_l: 0.2900  data_time: 0.0045  time: 0.5567
+2025/05/12 14:16:10 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:18  time: 0.5733  data_time: 0.0211  memory: 2402  
+2025/05/12 14:16:37 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 14:17:05 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5544  data_time: 0.0026  memory: 2402  
+2025/05/12 14:17:33 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 14:18:01 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 14:18:28 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 14:18:56 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 14:19:24 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5555  data_time: 0.0026  memory: 2402  
+2025/05/12 14:19:52 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5558  data_time: 0.0026  memory: 2402  
+2025/05/12 14:20:20 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5555  data_time: 0.0024  memory: 2402  
+2025/05/12 14:20:20 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:20:25 - mmengine - INFO - bbox_mAP_copypaste: 0.090 0.197 0.076 0.003 0.035 0.208
+2025/05/12 14:20:26 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:20:26 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0900  coco/bbox_mAP_50: 0.1970  coco/bbox_mAP_75: 0.0760  coco/bbox_mAP_s: 0.0030  coco/bbox_mAP_m: 0.0350  coco/bbox_mAP_l: 0.2080  data_time: 0.0044  time: 0.5568
+2025/05/12 14:20:55 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:16  time: 0.5701  data_time: 0.0179  memory: 2402  
+2025/05/12 14:21:23 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 14:21:51 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 14:22:18 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 14:22:46 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 14:23:14 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 14:23:42 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 14:24:09 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 14:24:37 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5556  data_time: 0.0025  memory: 2402  
+2025/05/12 14:25:05 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5554  data_time: 0.0024  memory: 2402  
+2025/05/12 14:25:05 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:25:07 - mmengine - INFO - bbox_mAP_copypaste: 0.015 0.036 0.010 0.000 0.002 0.034
+2025/05/12 14:25:08 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:25:08 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0150  coco/bbox_mAP_50: 0.0360  coco/bbox_mAP_75: 0.0100  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0020  coco/bbox_mAP_l: 0.0340  data_time: 0.0041  time: 0.5564
+2025/05/12 14:25:37 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:16  time: 0.5691  data_time: 0.0169  memory: 2402  
+2025/05/12 14:26:05 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 14:26:33 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 14:27:00 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5544  data_time: 0.0026  memory: 2402  
+2025/05/12 14:27:28 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 14:27:56 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 14:28:24 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 14:28:51 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 14:29:19 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5559  data_time: 0.0026  memory: 2402  
+2025/05/12 14:29:47 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5557  data_time: 0.0025  memory: 2402  
+2025/05/12 14:29:47 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:29:47 - mmengine - INFO - bbox_mAP_copypaste: 0.001 0.001 0.000 0.000 0.000 0.001
+2025/05/12 14:29:48 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:29:48 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0010  coco/bbox_mAP_50: 0.0010  coco/bbox_mAP_75: 0.0000  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0000  coco/bbox_mAP_l: 0.0010  data_time: 0.0040  time: 0.5564
+2025/05/12 14:30:17 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:15  time: 0.5669  data_time: 0.0134  memory: 2402  
+2025/05/12 14:30:45 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 14:31:13 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5548  data_time: 0.0027  memory: 2402  
+2025/05/12 14:31:41 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 14:32:08 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 14:32:36 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5557  data_time: 0.0026  memory: 2402  
+2025/05/12 14:33:04 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5560  data_time: 0.0026  memory: 2402  
+2025/05/12 14:33:32 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5564  data_time: 0.0027  memory: 2402  
+2025/05/12 14:34:00 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5566  data_time: 0.0027  memory: 2402  
+2025/05/12 14:34:27 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5565  data_time: 0.0025  memory: 2402  
+2025/05/12 14:34:28 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:34:33 - mmengine - INFO - bbox_mAP_copypaste: 0.160 0.346 0.134 0.016 0.099 0.325
+2025/05/12 14:34:33 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:34:33 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1600  coco/bbox_mAP_50: 0.3460  coco/bbox_mAP_75: 0.1340  coco/bbox_mAP_s: 0.0160  coco/bbox_mAP_m: 0.0990  coco/bbox_mAP_l: 0.3250  data_time: 0.0037  time: 0.5568
+2025/05/12 14:35:03 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5662  data_time: 0.0136  memory: 2402  
+2025/05/12 14:35:30 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 14:35:58 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5545  data_time: 0.0027  memory: 2402  
+2025/05/12 14:36:26 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 14:36:54 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5554  data_time: 0.0028  memory: 2402  
+2025/05/12 14:37:22 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5555  data_time: 0.0027  memory: 2402  
+2025/05/12 14:37:49 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5557  data_time: 0.0027  memory: 2402  
+2025/05/12 14:38:17 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5562  data_time: 0.0028  memory: 2402  
+2025/05/12 14:38:45 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5567  data_time: 0.0028  memory: 2402  
+2025/05/12 14:39:13 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5559  data_time: 0.0025  memory: 2402  
+2025/05/12 14:39:13 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:39:19 - mmengine - INFO - bbox_mAP_copypaste: 0.107 0.232 0.092 0.006 0.052 0.235
+2025/05/12 14:39:19 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:39:19 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1070  coco/bbox_mAP_50: 0.2320  coco/bbox_mAP_75: 0.0920  coco/bbox_mAP_s: 0.0060  coco/bbox_mAP_m: 0.0520  coco/bbox_mAP_l: 0.2350  data_time: 0.0038  time: 0.5565
+2025/05/12 14:39:48 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:15  time: 0.5673  data_time: 0.0140  memory: 2402  
+2025/05/12 14:40:16 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5555  data_time: 0.0029  memory: 2402  
+2025/05/12 14:40:44 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5549  data_time: 0.0028  memory: 2402  
+2025/05/12 14:41:12 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5552  data_time: 0.0028  memory: 2402  
+2025/05/12 14:41:39 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 14:42:07 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 14:42:35 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5557  data_time: 0.0025  memory: 2402  
+2025/05/12 14:43:03 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5560  data_time: 0.0026  memory: 2402  
+2025/05/12 14:43:31 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5564  data_time: 0.0026  memory: 2402  
+2025/05/12 14:43:58 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5561  data_time: 0.0025  memory: 2402  
+2025/05/12 14:43:59 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:44:04 - mmengine - INFO - bbox_mAP_copypaste: 0.074 0.153 0.072 0.002 0.027 0.162
+2025/05/12 14:44:04 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:44:04 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0740  coco/bbox_mAP_50: 0.1530  coco/bbox_mAP_75: 0.0720  coco/bbox_mAP_s: 0.0020  coco/bbox_mAP_m: 0.0270  coco/bbox_mAP_l: 0.1620  data_time: 0.0038  time: 0.5567
+2025/05/12 14:44:34 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5657  data_time: 0.0139  memory: 2402  
+2025/05/12 14:45:01 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 14:45:29 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 14:45:57 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 14:46:25 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 14:46:52 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 14:47:20 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5550  data_time: 0.0025  memory: 2402  
+2025/05/12 14:47:48 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 14:48:16 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5557  data_time: 0.0026  memory: 2402  
+2025/05/12 14:48:43 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0024  memory: 2402  
+2025/05/12 14:48:44 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:48:46 - mmengine - INFO - bbox_mAP_copypaste: 0.011 0.028 0.003 0.000 0.001 0.025
+2025/05/12 14:48:46 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:48:46 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0110  coco/bbox_mAP_50: 0.0280  coco/bbox_mAP_75: 0.0030  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0010  coco/bbox_mAP_l: 0.0250  data_time: 0.0037  time: 0.5559
+2025/05/12 14:49:16 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5664  data_time: 0.0140  memory: 2402  
+2025/05/12 14:49:44 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5546  data_time: 0.0027  memory: 2402  
+2025/05/12 14:50:11 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 14:50:39 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5548  data_time: 0.0027  memory: 2402  
+2025/05/12 14:51:07 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 14:51:34 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 14:52:02 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5555  data_time: 0.0027  memory: 2402  
+2025/05/12 14:52:30 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5562  data_time: 0.0028  memory: 2402  
+2025/05/12 14:52:58 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5565  data_time: 0.0028  memory: 2402  
+2025/05/12 14:53:26 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5566  data_time: 0.0027  memory: 2402  
+2025/05/12 14:53:26 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:53:26 - mmengine - INFO - bbox_mAP_copypaste: 0.000 0.000 0.000 0.000 0.000 0.000
+2025/05/12 14:53:26 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:53:26 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0000  coco/bbox_mAP_50: 0.0000  coco/bbox_mAP_75: 0.0000  coco/bbox_mAP_s: 0.0000  coco/bbox_mAP_m: 0.0000  coco/bbox_mAP_l: 0.0000  data_time: 0.0038  time: 0.5565
+2025/05/12 14:53:56 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5661  data_time: 0.0131  memory: 2402  
+2025/05/12 14:54:24 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:44  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 14:54:52 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5554  data_time: 0.0027  memory: 2402  
+2025/05/12 14:55:19 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 14:55:47 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5554  data_time: 0.0025  memory: 2402  
+2025/05/12 14:56:15 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5555  data_time: 0.0025  memory: 2402  
+2025/05/12 14:56:43 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5557  data_time: 0.0025  memory: 2402  
+2025/05/12 14:57:10 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5562  data_time: 0.0025  memory: 2402  
+2025/05/12 14:57:38 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5567  data_time: 0.0026  memory: 2402  
+2025/05/12 14:58:06 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5566  data_time: 0.0025  memory: 2402  
+2025/05/12 14:58:06 - mmengine - INFO - Evaluating bbox...
+2025/05/12 14:58:11 - mmengine - INFO - bbox_mAP_copypaste: 0.227 0.509 0.168 0.039 0.190 0.390
+2025/05/12 14:58:12 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 14:58:12 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2270  coco/bbox_mAP_50: 0.5090  coco/bbox_mAP_75: 0.1680  coco/bbox_mAP_s: 0.0390  coco/bbox_mAP_m: 0.1900  coco/bbox_mAP_l: 0.3900  data_time: 0.0036  time: 0.5568
+2025/05/12 14:58:41 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5651  data_time: 0.0133  memory: 2402  
+2025/05/12 14:59:09 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 14:59:36 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 15:00:04 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 15:00:32 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5544  data_time: 0.0026  memory: 2402  
+2025/05/12 15:01:00 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 15:01:27 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 15:01:55 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5548  data_time: 0.0025  memory: 2402  
+2025/05/12 15:02:23 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0027  memory: 2402  
+2025/05/12 15:02:51 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0024  memory: 2402  
+2025/05/12 15:02:51 - mmengine - INFO - Evaluating bbox...
+2025/05/12 15:02:56 - mmengine - INFO - bbox_mAP_copypaste: 0.220 0.499 0.166 0.029 0.195 0.394
+2025/05/12 15:02:56 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 15:02:56 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2200  coco/bbox_mAP_50: 0.4990  coco/bbox_mAP_75: 0.1660  coco/bbox_mAP_s: 0.0290  coco/bbox_mAP_m: 0.1950  coco/bbox_mAP_l: 0.3940  data_time: 0.0036  time: 0.5555
+2025/05/12 15:03:26 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5650  data_time: 0.0131  memory: 2402  
+2025/05/12 15:03:53 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 15:04:21 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5534  data_time: 0.0024  memory: 2402  
+2025/05/12 15:04:49 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 15:05:16 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 15:05:44 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0024  memory: 2402  
+2025/05/12 15:06:12 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0024  memory: 2402  
+2025/05/12 15:06:40 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 15:07:07 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 15:07:35 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5556  data_time: 0.0025  memory: 2402  
+2025/05/12 15:07:36 - mmengine - INFO - Evaluating bbox...
+2025/05/12 15:07:41 - mmengine - INFO - bbox_mAP_copypaste: 0.180 0.416 0.137 0.013 0.123 0.356
+2025/05/12 15:07:41 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 15:07:41 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1800  coco/bbox_mAP_50: 0.4160  coco/bbox_mAP_75: 0.1370  coco/bbox_mAP_s: 0.0130  coco/bbox_mAP_m: 0.1230  coco/bbox_mAP_l: 0.3560  data_time: 0.0036  time: 0.5556
+2025/05/12 15:08:10 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5647  data_time: 0.0132  memory: 2402  
+2025/05/12 15:08:38 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 15:09:06 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 15:09:33 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 15:10:01 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 15:10:29 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 15:10:57 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5550  data_time: 0.0027  memory: 2402  
+2025/05/12 15:11:24 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5550  data_time: 0.0027  memory: 2402  
+2025/05/12 15:11:52 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 15:12:20 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 15:12:20 - mmengine - INFO - Evaluating bbox...
+2025/05/12 15:12:25 - mmengine - INFO - bbox_mAP_copypaste: 0.155 0.352 0.125 0.007 0.085 0.328
+2025/05/12 15:12:26 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 15:12:26 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1550  coco/bbox_mAP_50: 0.3520  coco/bbox_mAP_75: 0.1250  coco/bbox_mAP_s: 0.0070  coco/bbox_mAP_m: 0.0850  coco/bbox_mAP_l: 0.3280  data_time: 0.0037  time: 0.5555
+2025/05/12 15:12:55 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5647  data_time: 0.0132  memory: 2402  
+2025/05/12 15:13:23 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 15:13:50 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 15:14:18 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5536  data_time: 0.0024  memory: 2402  
+2025/05/12 15:14:46 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 15:15:13 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5540  data_time: 0.0023  memory: 2402  
+2025/05/12 15:15:41 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5543  data_time: 0.0024  memory: 2402  
+2025/05/12 15:16:09 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5546  data_time: 0.0024  memory: 2402  
+2025/05/12 15:16:37 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5550  data_time: 0.0025  memory: 2402  
+2025/05/12 15:17:04 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5549  data_time: 0.0024  memory: 2402  
+2025/05/12 15:17:05 - mmengine - INFO - Evaluating bbox...
+2025/05/12 15:17:10 - mmengine - INFO - bbox_mAP_copypaste: 0.129 0.294 0.106 0.004 0.060 0.288
+2025/05/12 15:17:10 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 15:17:10 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1290  coco/bbox_mAP_50: 0.2940  coco/bbox_mAP_75: 0.1060  coco/bbox_mAP_s: 0.0040  coco/bbox_mAP_m: 0.0600  coco/bbox_mAP_l: 0.2880  data_time: 0.0035  time: 0.5553
+2025/05/12 15:20:38 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:30:57  time: 4.1276  data_time: 3.5785  memory: 2402  
+2025/05/12 15:23:36 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:25:40  time: 3.5743  data_time: 3.0264  memory: 2402  
+2025/05/12 15:26:33 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:21:50  time: 3.5275  data_time: 2.9784  memory: 2402  
+2025/05/12 15:29:34 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:18:33  time: 3.6221  data_time: 3.0722  memory: 2402  
+2025/05/12 15:32:50 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:15:38  time: 3.9185  data_time: 3.3684  memory: 2402  
+2025/05/12 15:35:51 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:12:26  time: 3.6272  data_time: 3.0771  memory: 2402  
+2025/05/12 15:38:49 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:09:16  time: 3.5516  data_time: 3.0015  memory: 2402  
+2025/05/12 15:42:00 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:06:12  time: 3.8178  data_time: 3.2681  memory: 2402  
+2025/05/12 15:45:00 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:03:05  time: 3.6057  data_time: 3.0573  memory: 2402  
+2025/05/12 15:48:06 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 3.7161  data_time: 3.1678  memory: 2402  
+2025/05/12 15:48:06 - mmengine - INFO - Evaluating bbox...
+2025/05/12 15:48:11 - mmengine - INFO - bbox_mAP_copypaste: 0.202 0.469 0.151 0.023 0.158 0.380
+2025/05/12 15:48:11 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 15:48:11 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2020  coco/bbox_mAP_50: 0.4690  coco/bbox_mAP_75: 0.1510  coco/bbox_mAP_s: 0.0230  coco/bbox_mAP_m: 0.1580  coco/bbox_mAP_l: 0.3800  data_time: 3.1533  time: 3.7025
+2025/05/12 15:50:00 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:16:07  time: 2.1500  data_time: 1.6028  memory: 2402  
+2025/05/12 15:51:33 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:13:20  time: 1.8541  data_time: 1.3075  memory: 2402  
+2025/05/12 15:53:06 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:11:23  time: 1.8537  data_time: 1.3075  memory: 2402  
+2025/05/12 15:54:37 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:09:37  time: 1.8374  data_time: 1.2911  memory: 2402  
+2025/05/12 15:56:20 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:08:07  time: 2.0490  data_time: 1.5025  memory: 2402  
+2025/05/12 15:57:51 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:06:25  time: 1.8254  data_time: 1.2791  memory: 2402  
+2025/05/12 15:59:22 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:04:46  time: 1.8229  data_time: 1.2763  memory: 2402  
+2025/05/12 16:00:53 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:03:10  time: 1.8181  data_time: 1.2715  memory: 2402  
+2025/05/12 16:02:35 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:01:35  time: 2.0369  data_time: 1.4901  memory: 2402  
+2025/05/12 16:04:07 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 1.8325  data_time: 1.2860  memory: 2402  
+2025/05/12 16:04:07 - mmengine - INFO - Evaluating bbox...
+2025/05/12 16:04:12 - mmengine - INFO - bbox_mAP_copypaste: 0.184 0.423 0.143 0.014 0.129 0.369
+2025/05/12 16:04:13 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 16:04:13 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1840  coco/bbox_mAP_50: 0.4230  coco/bbox_mAP_75: 0.1430  coco/bbox_mAP_s: 0.0140  coco/bbox_mAP_m: 0.1290  coco/bbox_mAP_l: 0.3690  data_time: 1.3587  time: 1.9053
+2025/05/12 16:09:24 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:46:32  time: 6.2058  data_time: 5.6584  memory: 2402  
+2025/05/12 16:13:51 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:38:27  time: 5.3324  data_time: 4.7854  memory: 2402  
+2025/05/12 16:18:17 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:32:48  time: 5.3322  data_time: 4.7852  memory: 2402  
+2025/05/12 16:22:43 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:27:44  time: 5.3197  data_time: 4.7723  memory: 2402  
+2025/05/12 16:27:47 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:23:33  time: 6.0801  data_time: 5.5321  memory: 2402  
+2025/05/12 16:32:12 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:18:39  time: 5.3025  data_time: 4.7551  memory: 2402  
+2025/05/12 16:36:37 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:13:52  time: 5.2867  data_time: 4.7393  memory: 2402  
+2025/05/12 16:41:02 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:09:12  time: 5.3081  data_time: 4.7608  memory: 2402  
+2025/05/12 16:46:04 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:04:38  time: 6.0299  data_time: 5.4810  memory: 2402  
+2025/05/12 16:50:33 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 5.3785  data_time: 4.8299  memory: 2402  
+2025/05/12 16:50:33 - mmengine - INFO - Evaluating bbox...
+2025/05/12 16:50:38 - mmengine - INFO - bbox_mAP_copypaste: 0.142 0.307 0.119 0.005 0.063 0.316
+2025/05/12 16:50:38 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 16:50:38 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1420  coco/bbox_mAP_50: 0.3070  coco/bbox_mAP_75: 0.1190  coco/bbox_mAP_s: 0.0050  coco/bbox_mAP_m: 0.0630  coco/bbox_mAP_l: 0.3160  data_time: 5.0000  time: 5.5476
+2025/05/12 16:54:07 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:31:05  time: 4.1456  data_time: 3.5980  memory: 2402  
+2025/05/12 16:57:07 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:25:50  time: 3.6094  data_time: 3.0614  memory: 2402  
+2025/05/12 17:00:08 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:22:06  time: 3.6192  data_time: 3.0705  memory: 2402  
+2025/05/12 17:03:08 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:18:42  time: 3.5969  data_time: 3.0481  memory: 2402  
+2025/05/12 17:06:23 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:15:43  time: 3.9048  data_time: 3.3562  memory: 2402  
+2025/05/12 17:09:26 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:12:31  time: 3.6608  data_time: 3.1125  memory: 2402  
+2025/05/12 17:12:35 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:09:23  time: 3.7677  data_time: 3.2191  memory: 2402  
+2025/05/12 17:15:35 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:06:13  time: 3.6152  data_time: 3.0661  memory: 2402  
+2025/05/12 17:18:45 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:03:07  time: 3.7899  data_time: 3.2408  memory: 2402  
+2025/05/12 17:21:47 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 3.6384  data_time: 3.0900  memory: 2402  
+2025/05/12 17:21:47 - mmengine - INFO - Evaluating bbox...
+2025/05/12 17:21:52 - mmengine - INFO - bbox_mAP_copypaste: 0.124 0.268 0.098 0.004 0.052 0.286
+2025/05/12 17:21:52 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 17:21:52 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1240  coco/bbox_mAP_50: 0.2680  coco/bbox_mAP_75: 0.0980  coco/bbox_mAP_s: 0.0040  coco/bbox_mAP_m: 0.0520  coco/bbox_mAP_l: 0.2860  data_time: 3.1799  time: 3.7284
+2025/05/12 17:25:21 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:31:08  time: 4.1533  data_time: 3.6052  memory: 2402  
+2025/05/12 17:28:21 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:25:50  time: 3.5988  data_time: 3.0517  memory: 2402  
+2025/05/12 17:31:20 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:22:02  time: 3.5808  data_time: 3.0331  memory: 2402  
+2025/05/12 17:34:20 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:18:38  time: 3.5871  data_time: 3.0393  memory: 2402  
+2025/05/12 17:37:37 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:15:43  time: 3.9500  data_time: 3.4017  memory: 2402  
+2025/05/12 17:40:43 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:12:32  time: 3.7125  data_time: 3.1643  memory: 2402  
+2025/05/12 17:43:42 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:09:20  time: 3.5830  data_time: 3.0354  memory: 2402  
+2025/05/12 17:46:42 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:06:11  time: 3.5909  data_time: 3.0436  memory: 2402  
+2025/05/12 17:49:52 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:03:06  time: 3.7996  data_time: 3.2525  memory: 2402  
+2025/05/12 17:53:07 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 3.9004  data_time: 3.3522  memory: 2402  
+2025/05/12 17:53:07 - mmengine - INFO - Evaluating bbox...
+2025/05/12 17:53:11 - mmengine - INFO - bbox_mAP_copypaste: 0.111 0.233 0.099 0.003 0.037 0.263
+2025/05/12 17:53:11 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 17:53:11 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1110  coco/bbox_mAP_50: 0.2330  coco/bbox_mAP_75: 0.0990  coco/bbox_mAP_s: 0.0030  coco/bbox_mAP_m: 0.0370  coco/bbox_mAP_l: 0.2630  data_time: 3.1917  time: 3.7394
+2025/05/12 17:53:41 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:15  time: 0.5683  data_time: 0.0211  memory: 2402  
+2025/05/12 17:54:09 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5509  data_time: 0.0026  memory: 2402  
+2025/05/12 17:54:36 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5521  data_time: 0.0026  memory: 2402  
+2025/05/12 17:55:04 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5526  data_time: 0.0026  memory: 2402  
+2025/05/12 17:55:32 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5529  data_time: 0.0026  memory: 2402  
+2025/05/12 17:55:59 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 17:56:27 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5534  data_time: 0.0025  memory: 2402  
+2025/05/12 17:56:55 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 17:57:22 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 17:57:50 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5543  data_time: 0.0024  memory: 2402  
+2025/05/12 17:57:50 - mmengine - INFO - Evaluating bbox...
+2025/05/12 17:57:55 - mmengine - INFO - bbox_mAP_copypaste: 0.221 0.498 0.163 0.036 0.185 0.386
+2025/05/12 17:57:56 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 17:57:56 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2210  coco/bbox_mAP_50: 0.4980  coco/bbox_mAP_75: 0.1630  coco/bbox_mAP_s: 0.0360  coco/bbox_mAP_m: 0.1850  coco/bbox_mAP_l: 0.3860  data_time: 0.0429  time: 0.5932
+2025/05/12 17:58:26 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:19  time: 0.5768  data_time: 0.0254  memory: 2402  
+2025/05/12 17:58:53 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 17:59:21 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 17:59:49 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 18:00:16 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:00:44 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 18:01:12 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 18:01:39 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 18:02:07 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 18:02:35 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0024  memory: 2402  
+2025/05/12 18:02:35 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:02:40 - mmengine - INFO - bbox_mAP_copypaste: 0.198 0.448 0.164 0.023 0.150 0.368
+2025/05/12 18:02:41 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:02:41 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1980  coco/bbox_mAP_50: 0.4480  coco/bbox_mAP_75: 0.1640  coco/bbox_mAP_s: 0.0230  coco/bbox_mAP_m: 0.1500  coco/bbox_mAP_l: 0.3680  data_time: 0.0048  time: 0.5565
+2025/05/12 18:03:11 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:19  time: 0.5766  data_time: 0.0253  memory: 2402  
+2025/05/12 18:03:38 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 18:04:06 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 18:04:34 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 18:05:01 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 18:05:29 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 18:05:57 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 18:06:24 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5551  data_time: 0.0025  memory: 2402  
+2025/05/12 18:06:52 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 18:07:20 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 18:07:20 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:07:26 - mmengine - INFO - bbox_mAP_copypaste: 0.168 0.385 0.143 0.009 0.115 0.341
+2025/05/12 18:07:26 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:07:26 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1680  coco/bbox_mAP_50: 0.3850  coco/bbox_mAP_75: 0.1430  coco/bbox_mAP_s: 0.0090  coco/bbox_mAP_m: 0.1150  coco/bbox_mAP_l: 0.3410  data_time: 0.0048  time: 0.5566
+2025/05/12 18:07:56 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:20  time: 0.5781  data_time: 0.0262  memory: 2402  
+2025/05/12 18:08:23 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:08:51 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:09:19 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:09:47 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 18:10:14 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5544  data_time: 0.0025  memory: 2402  
+2025/05/12 18:10:42 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 18:11:10 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5548  data_time: 0.0025  memory: 2402  
+2025/05/12 18:11:37 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5551  data_time: 0.0025  memory: 2402  
+2025/05/12 18:12:05 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5554  data_time: 0.0025  memory: 2402  
+2025/05/12 18:12:06 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:12:10 - mmengine - INFO - bbox_mAP_copypaste: 0.146 0.333 0.116 0.004 0.084 0.309
+2025/05/12 18:12:11 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:12:11 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1460  coco/bbox_mAP_50: 0.3330  coco/bbox_mAP_75: 0.1160  coco/bbox_mAP_s: 0.0040  coco/bbox_mAP_m: 0.0840  coco/bbox_mAP_l: 0.3090  data_time: 0.0049  time: 0.5568
+2025/05/12 18:12:41 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:22  time: 0.5825  data_time: 0.0305  memory: 2402  
+2025/05/12 18:13:09 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:47  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 18:13:36 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 18:14:04 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:14:32 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 18:14:59 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 18:15:27 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 18:15:55 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 18:16:23 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 18:16:50 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 18:16:51 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:16:55 - mmengine - INFO - bbox_mAP_copypaste: 0.126 0.295 0.092 0.005 0.057 0.289
+2025/05/12 18:16:56 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:16:56 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1260  coco/bbox_mAP_50: 0.2950  coco/bbox_mAP_75: 0.0920  coco/bbox_mAP_s: 0.0050  coco/bbox_mAP_m: 0.0570  coco/bbox_mAP_l: 0.2890  data_time: 0.0054  time: 0.5572
+2025/05/12 18:17:29 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:52  time: 0.6489  data_time: 0.0975  memory: 2402  
+2025/05/12 18:17:57 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:04:00  time: 0.5536  data_time: 0.0028  memory: 2402  
+2025/05/12 18:18:25 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:24  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 18:18:52 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:53  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 18:19:20 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:23  time: 0.5546  data_time: 0.0029  memory: 2402  
+2025/05/12 18:19:48 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:53  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 18:20:16 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:25  time: 0.5547  data_time: 0.0027  memory: 2402  
+2025/05/12 18:20:43 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:56  time: 0.5550  data_time: 0.0028  memory: 2402  
+2025/05/12 18:21:11 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:28  time: 0.5554  data_time: 0.0029  memory: 2402  
+2025/05/12 18:21:39 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5563  data_time: 0.0031  memory: 2402  
+2025/05/12 18:21:39 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:21:43 - mmengine - INFO - bbox_mAP_copypaste: 0.111 0.242 0.088 0.006 0.052 0.238
+2025/05/12 18:21:43 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:21:43 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1110  coco/bbox_mAP_50: 0.2420  coco/bbox_mAP_75: 0.0880  coco/bbox_mAP_s: 0.0060  coco/bbox_mAP_m: 0.0520  coco/bbox_mAP_l: 0.2380  data_time: 0.0122  time: 0.5640
+2025/05/12 18:22:26 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:06:20  time: 0.8466  data_time: 0.2958  memory: 2402  
+2025/05/12 18:23:02 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:05:13  time: 0.7193  data_time: 0.1689  memory: 2402  
+2025/05/12 18:23:38 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:04:26  time: 0.7193  data_time: 0.1685  memory: 2402  
+2025/05/12 18:24:14 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:03:45  time: 0.7191  data_time: 0.1684  memory: 2402  
+2025/05/12 18:24:52 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:03:07  time: 0.7450  data_time: 0.1940  memory: 2402  
+2025/05/12 18:25:27 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:02:28  time: 0.7181  data_time: 0.1673  memory: 2402  
+2025/05/12 18:26:03 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:51  time: 0.7194  data_time: 0.1684  memory: 2402  
+2025/05/12 18:26:39 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:01:13  time: 0.7192  data_time: 0.1682  memory: 2402  
+2025/05/12 18:27:17 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:36  time: 0.7458  data_time: 0.1949  memory: 2402  
+2025/05/12 18:27:53 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.7179  data_time: 0.1670  memory: 2402  
+2025/05/12 18:27:53 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:27:56 - mmengine - INFO - bbox_mAP_copypaste: 0.084 0.193 0.065 0.003 0.032 0.187
+2025/05/12 18:27:56 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:27:56 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0840  coco/bbox_mAP_50: 0.1930  coco/bbox_mAP_75: 0.0650  coco/bbox_mAP_s: 0.0030  coco/bbox_mAP_m: 0.0320  coco/bbox_mAP_l: 0.1870  data_time: 0.1858  time: 0.7366
+2025/05/12 18:28:29 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:48  time: 0.6414  data_time: 0.0905  memory: 2402  
+2025/05/12 18:28:57 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:59  time: 0.5540  data_time: 0.0031  memory: 2402  
+2025/05/12 18:29:25 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:24  time: 0.5544  data_time: 0.0031  memory: 2402  
+2025/05/12 18:29:52 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:52  time: 0.5554  data_time: 0.0036  memory: 2402  
+2025/05/12 18:30:20 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:23  time: 0.5563  data_time: 0.0037  memory: 2402  
+2025/05/12 18:30:48 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:53  time: 0.5565  data_time: 0.0037  memory: 2402  
+2025/05/12 18:31:16 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:25  time: 0.5566  data_time: 0.0037  memory: 2402  
+2025/05/12 18:31:44 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:56  time: 0.5566  data_time: 0.0037  memory: 2402  
+2025/05/12 18:32:12 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:28  time: 0.5572  data_time: 0.0036  memory: 2402  
+2025/05/12 18:32:39 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5568  data_time: 0.0035  memory: 2402  
+2025/05/12 18:32:40 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:32:42 - mmengine - INFO - bbox_mAP_copypaste: 0.064 0.138 0.054 0.002 0.025 0.143
+2025/05/12 18:32:42 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:32:42 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0640  coco/bbox_mAP_50: 0.1380  coco/bbox_mAP_75: 0.0540  coco/bbox_mAP_s: 0.0020  coco/bbox_mAP_m: 0.0250  coco/bbox_mAP_l: 0.1430  data_time: 0.0122  time: 0.5645
+2025/05/12 18:33:19 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:05:15  time: 0.7011  data_time: 0.1498  memory: 2402  
+2025/05/12 18:33:48 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:04:19  time: 0.5942  data_time: 0.0430  memory: 2402  
+2025/05/12 18:34:18 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:40  time: 0.5936  data_time: 0.0426  memory: 2402  
+2025/05/12 18:34:48 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:03:06  time: 0.5947  data_time: 0.0432  memory: 2402  
+2025/05/12 18:35:18 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:34  time: 0.6001  data_time: 0.0481  memory: 2402  
+2025/05/12 18:35:47 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:02:02  time: 0.5935  data_time: 0.0409  memory: 2402  
+2025/05/12 18:36:17 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:31  time: 0.5913  data_time: 0.0383  memory: 2402  
+2025/05/12 18:36:46 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:01:00  time: 0.5828  data_time: 0.0294  memory: 2402  
+2025/05/12 18:37:15 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:30  time: 0.5870  data_time: 0.0336  memory: 2402  
+2025/05/12 18:37:45 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5828  data_time: 0.0292  memory: 2402  
+2025/05/12 18:37:45 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:37:47 - mmengine - INFO - bbox_mAP_copypaste: 0.049 0.113 0.034 0.001 0.014 0.113
+2025/05/12 18:37:47 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:37:47 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0490  coco/bbox_mAP_50: 0.1130  coco/bbox_mAP_75: 0.0340  coco/bbox_mAP_s: 0.0010  coco/bbox_mAP_m: 0.0140  coco/bbox_mAP_l: 0.1130  data_time: 0.0497  time: 0.6020
+2025/05/12 18:38:21 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:50  time: 0.6460  data_time: 0.0936  memory: 2402  
+2025/05/12 18:38:48 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:04:00  time: 0.5558  data_time: 0.0037  memory: 2402  
+2025/05/12 18:39:16 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:25  time: 0.5562  data_time: 0.0039  memory: 2402  
+2025/05/12 18:39:44 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:53  time: 0.5567  data_time: 0.0040  memory: 2402  
+2025/05/12 18:40:12 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:23  time: 0.5564  data_time: 0.0038  memory: 2402  
+2025/05/12 18:40:40 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:54  time: 0.5565  data_time: 0.0037  memory: 2402  
+2025/05/12 18:41:08 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:25  time: 0.5576  data_time: 0.0043  memory: 2402  
+2025/05/12 18:41:35 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:56  time: 0.5574  data_time: 0.0038  memory: 2402  
+2025/05/12 18:42:03 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:28  time: 0.5574  data_time: 0.0039  memory: 2402  
+2025/05/12 18:42:31 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5570  data_time: 0.0033  memory: 2402  
+2025/05/12 18:42:31 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:42:34 - mmengine - INFO - bbox_mAP_copypaste: 0.044 0.103 0.036 0.001 0.014 0.101
+2025/05/12 18:42:34 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:42:34 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.0440  coco/bbox_mAP_50: 0.1030  coco/bbox_mAP_75: 0.0360  coco/bbox_mAP_s: 0.0010  coco/bbox_mAP_m: 0.0140  coco/bbox_mAP_l: 0.1010  data_time: 0.0128  time: 0.5657
+2025/05/12 18:43:04 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5729  data_time: 0.0199  memory: 2402  
+2025/05/12 18:43:32 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5584  data_time: 0.0045  memory: 2402  
+2025/05/12 18:44:00 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5569  data_time: 0.0038  memory: 2402  
+2025/05/12 18:44:27 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5560  data_time: 0.0034  memory: 2402  
+2025/05/12 18:44:55 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:20  time: 0.5566  data_time: 0.0036  memory: 2402  
+2025/05/12 18:45:23 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5569  data_time: 0.0034  memory: 2402  
+2025/05/12 18:45:51 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5572  data_time: 0.0034  memory: 2402  
+2025/05/12 18:46:19 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5582  data_time: 0.0038  memory: 2402  
+2025/05/12 18:46:47 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5583  data_time: 0.0039  memory: 2402  
+2025/05/12 18:47:15 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5567  data_time: 0.0030  memory: 2402  
+2025/05/12 18:47:15 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:47:21 - mmengine - INFO - bbox_mAP_copypaste: 0.182 0.409 0.135 0.018 0.128 0.344
+2025/05/12 18:47:21 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:47:21 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1820  coco/bbox_mAP_50: 0.4090  coco/bbox_mAP_75: 0.1350  coco/bbox_mAP_s: 0.0180  coco/bbox_mAP_m: 0.1280  coco/bbox_mAP_l: 0.3440  data_time: 0.0053  time: 0.5588
+2025/05/12 18:47:50 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5722  data_time: 0.0206  memory: 2402  
+2025/05/12 18:48:18 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 18:48:46 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 18:49:14 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 18:49:41 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:50:09 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 18:50:37 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 18:51:04 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 18:51:32 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 18:52:00 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 18:52:00 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:52:06 - mmengine - INFO - bbox_mAP_copypaste: 0.131 0.271 0.118 0.007 0.070 0.268
+2025/05/12 18:52:06 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:52:06 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1310  coco/bbox_mAP_50: 0.2710  coco/bbox_mAP_75: 0.1180  coco/bbox_mAP_s: 0.0070  coco/bbox_mAP_m: 0.0700  coco/bbox_mAP_l: 0.2680  data_time: 0.0044  time: 0.5561
+2025/05/12 18:52:36 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5718  data_time: 0.0206  memory: 2402  
+2025/05/12 18:53:03 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 18:53:31 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 18:53:59 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 18:54:27 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 18:54:54 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 18:55:22 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 18:55:50 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 18:56:18 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 18:56:45 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5555  data_time: 0.0025  memory: 2402  
+2025/05/12 18:56:46 - mmengine - INFO - Evaluating bbox...
+2025/05/12 18:56:51 - mmengine - INFO - bbox_mAP_copypaste: 0.144 0.313 0.129 0.008 0.089 0.292
+2025/05/12 18:56:52 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 18:56:52 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1440  coco/bbox_mAP_50: 0.3130  coco/bbox_mAP_75: 0.1290  coco/bbox_mAP_s: 0.0080  coco/bbox_mAP_m: 0.0890  coco/bbox_mAP_l: 0.2920  data_time: 0.0044  time: 0.5560
+2025/05/12 18:57:21 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5729  data_time: 0.0217  memory: 2402  
+2025/05/12 18:57:49 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 18:58:17 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 18:58:44 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 18:59:12 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 18:59:40 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 19:00:07 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5547  data_time: 0.0025  memory: 2402  
+2025/05/12 19:00:35 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 19:01:03 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 19:01:31 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5554  data_time: 0.0025  memory: 2402  
+2025/05/12 19:01:31 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:01:37 - mmengine - INFO - bbox_mAP_copypaste: 0.110 0.248 0.093 0.004 0.060 0.231
+2025/05/12 19:01:37 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:01:37 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1100  coco/bbox_mAP_50: 0.2480  coco/bbox_mAP_75: 0.0930  coco/bbox_mAP_s: 0.0040  coco/bbox_mAP_m: 0.0600  coco/bbox_mAP_l: 0.2310  data_time: 0.0045  time: 0.5562
+2025/05/12 19:02:07 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:17  time: 0.5718  data_time: 0.0206  memory: 2402  
+2025/05/12 19:02:34 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:45  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 19:03:02 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 19:03:30 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 19:03:57 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 19:04:25 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 19:04:53 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 19:05:21 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 19:05:48 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5555  data_time: 0.0026  memory: 2402  
+2025/05/12 19:06:16 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5557  data_time: 0.0026  memory: 2402  
+2025/05/12 19:06:16 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:06:22 - mmengine - INFO - bbox_mAP_copypaste: 0.116 0.250 0.096 0.005 0.061 0.243
+2025/05/12 19:06:22 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:06:22 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1160  coco/bbox_mAP_50: 0.2500  coco/bbox_mAP_75: 0.0960  coco/bbox_mAP_s: 0.0050  coco/bbox_mAP_m: 0.0610  coco/bbox_mAP_l: 0.2430  data_time: 0.0044  time: 0.5561
+2025/05/12 19:06:51 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5629  data_time: 0.0115  memory: 2402  
+2025/05/12 19:07:19 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5534  data_time: 0.0025  memory: 2402  
+2025/05/12 19:07:47 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5532  data_time: 0.0025  memory: 2402  
+2025/05/12 19:08:14 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 19:08:42 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 19:09:10 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5538  data_time: 0.0024  memory: 2402  
+2025/05/12 19:09:38 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 19:10:05 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5548  data_time: 0.0025  memory: 2402  
+2025/05/12 19:10:33 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 19:11:01 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5550  data_time: 0.0024  memory: 2402  
+2025/05/12 19:11:01 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:11:06 - mmengine - INFO - bbox_mAP_copypaste: 0.208 0.473 0.165 0.038 0.168 0.360
+2025/05/12 19:11:06 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:11:06 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2080  coco/bbox_mAP_50: 0.4730  coco/bbox_mAP_75: 0.1650  coco/bbox_mAP_s: 0.0380  coco/bbox_mAP_m: 0.1680  coco/bbox_mAP_l: 0.3600  data_time: 0.0034  time: 0.5550
+2025/05/12 19:11:35 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5619  data_time: 0.0108  memory: 2402  
+2025/05/12 19:12:03 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5532  data_time: 0.0024  memory: 2402  
+2025/05/12 19:12:31 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 19:12:58 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 19:13:26 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5536  data_time: 0.0025  memory: 2402  
+2025/05/12 19:13:54 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5538  data_time: 0.0024  memory: 2402  
+2025/05/12 19:14:22 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 19:14:49 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 19:15:17 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 19:15:45 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5546  data_time: 0.0023  memory: 2402  
+2025/05/12 19:15:45 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:15:50 - mmengine - INFO - bbox_mAP_copypaste: 0.178 0.411 0.137 0.026 0.136 0.312
+2025/05/12 19:15:50 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:15:50 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1780  coco/bbox_mAP_50: 0.4110  coco/bbox_mAP_75: 0.1370  coco/bbox_mAP_s: 0.0260  coco/bbox_mAP_m: 0.1360  coco/bbox_mAP_l: 0.3120  data_time: 0.0033  time: 0.5548
+2025/05/12 19:16:19 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5624  data_time: 0.0111  memory: 2402  
+2025/05/12 19:16:47 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 19:17:15 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 19:17:42 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5540  data_time: 0.0026  memory: 2402  
+2025/05/12 19:18:10 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 19:18:38 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5540  data_time: 0.0025  memory: 2402  
+2025/05/12 19:19:06 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 19:19:33 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5545  data_time: 0.0025  memory: 2402  
+2025/05/12 19:20:01 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5550  data_time: 0.0025  memory: 2402  
+2025/05/12 19:20:29 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 19:20:29 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:20:34 - mmengine - INFO - bbox_mAP_copypaste: 0.151 0.340 0.124 0.017 0.104 0.274
+2025/05/12 19:20:34 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:20:34 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1510  coco/bbox_mAP_50: 0.3400  coco/bbox_mAP_75: 0.1240  coco/bbox_mAP_s: 0.0170  coco/bbox_mAP_m: 0.1040  coco/bbox_mAP_l: 0.2740  data_time: 0.0034  time: 0.5551
+2025/05/12 19:21:03 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5621  data_time: 0.0111  memory: 2402  
+2025/05/12 19:21:31 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5530  data_time: 0.0025  memory: 2402  
+2025/05/12 19:21:59 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 19:22:26 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 19:22:54 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5533  data_time: 0.0025  memory: 2402  
+2025/05/12 19:23:22 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5540  data_time: 0.0025  memory: 2402  
+2025/05/12 19:23:49 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 19:24:17 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 19:24:45 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 19:25:13 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5548  data_time: 0.0024  memory: 2402  
+2025/05/12 19:25:13 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:25:17 - mmengine - INFO - bbox_mAP_copypaste: 0.146 0.335 0.107 0.017 0.097 0.269
+2025/05/12 19:25:17 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:25:17 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1460  coco/bbox_mAP_50: 0.3350  coco/bbox_mAP_75: 0.1070  coco/bbox_mAP_s: 0.0170  coco/bbox_mAP_m: 0.0970  coco/bbox_mAP_l: 0.2690  data_time: 0.0034  time: 0.5548
+2025/05/12 19:25:47 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5625  data_time: 0.0112  memory: 2402  
+2025/05/12 19:26:14 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5533  data_time: 0.0025  memory: 2402  
+2025/05/12 19:26:42 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 19:27:10 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 19:27:38 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 19:28:05 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 19:28:33 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 19:29:01 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 19:29:28 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5547  data_time: 0.0025  memory: 2402  
+2025/05/12 19:29:56 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5548  data_time: 0.0024  memory: 2402  
+2025/05/12 19:29:56 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:30:01 - mmengine - INFO - bbox_mAP_copypaste: 0.125 0.278 0.104 0.009 0.085 0.241
+2025/05/12 19:30:01 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:30:01 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1250  coco/bbox_mAP_50: 0.2780  coco/bbox_mAP_75: 0.1040  coco/bbox_mAP_s: 0.0090  coco/bbox_mAP_m: 0.0850  coco/bbox_mAP_l: 0.2410  data_time: 0.0034  time: 0.5550
+2025/05/12 19:30:30 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5653  data_time: 0.0138  memory: 2402  
+2025/05/12 19:30:58 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 19:31:26 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5544  data_time: 0.0027  memory: 2402  
+2025/05/12 19:31:53 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 19:32:21 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 19:32:49 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5539  data_time: 0.0024  memory: 2402  
+2025/05/12 19:33:17 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 19:33:44 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5547  data_time: 0.0025  memory: 2402  
+2025/05/12 19:34:12 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5550  data_time: 0.0025  memory: 2402  
+2025/05/12 19:34:40 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5551  data_time: 0.0024  memory: 2402  
+2025/05/12 19:34:40 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:34:45 - mmengine - INFO - bbox_mAP_copypaste: 0.227 0.512 0.171 0.053 0.200 0.375
+2025/05/12 19:34:45 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:34:45 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2270  coco/bbox_mAP_50: 0.5120  coco/bbox_mAP_75: 0.1710  coco/bbox_mAP_s: 0.0530  coco/bbox_mAP_m: 0.2000  coco/bbox_mAP_l: 0.3750  data_time: 0.0036  time: 0.5554
+2025/05/12 19:35:15 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5657  data_time: 0.0139  memory: 2402  
+2025/05/12 19:35:42 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5536  data_time: 0.0025  memory: 2402  
+2025/05/12 19:36:10 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5542  data_time: 0.0027  memory: 2402  
+2025/05/12 19:36:38 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 19:37:06 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 19:37:33 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5545  data_time: 0.0027  memory: 2402  
+2025/05/12 19:38:01 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 19:38:29 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5544  data_time: 0.0026  memory: 2402  
+2025/05/12 19:38:57 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 19:39:24 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 19:39:25 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:39:29 - mmengine - INFO - bbox_mAP_copypaste: 0.220 0.496 0.174 0.048 0.190 0.373
+2025/05/12 19:39:30 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:39:30 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2200  coco/bbox_mAP_50: 0.4960  coco/bbox_mAP_75: 0.1740  coco/bbox_mAP_s: 0.0480  coco/bbox_mAP_m: 0.1900  coco/bbox_mAP_l: 0.3730  data_time: 0.0037  time: 0.5555
+2025/05/12 19:39:59 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5651  data_time: 0.0140  memory: 2402  
+2025/05/12 19:40:27 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 19:40:55 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 19:41:22 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 19:41:50 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 19:42:18 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5540  data_time: 0.0025  memory: 2402  
+2025/05/12 19:42:45 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 19:43:13 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 19:43:41 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5552  data_time: 0.0027  memory: 2402  
+2025/05/12 19:44:09 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5549  data_time: 0.0025  memory: 2402  
+2025/05/12 19:44:09 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:44:14 - mmengine - INFO - bbox_mAP_copypaste: 0.221 0.488 0.166 0.048 0.193 0.370
+2025/05/12 19:44:14 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:44:14 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2210  coco/bbox_mAP_50: 0.4880  coco/bbox_mAP_75: 0.1660  coco/bbox_mAP_s: 0.0480  coco/bbox_mAP_m: 0.1930  coco/bbox_mAP_l: 0.3700  data_time: 0.0037  time: 0.5552
+2025/05/12 19:44:43 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5642  data_time: 0.0124  memory: 2402  
+2025/05/12 19:45:11 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 19:45:39 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5532  data_time: 0.0025  memory: 2402  
+2025/05/12 19:46:06 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 19:46:34 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 19:47:02 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5539  data_time: 0.0025  memory: 2402  
+2025/05/12 19:47:30 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5542  data_time: 0.0025  memory: 2402  
+2025/05/12 19:47:57 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 19:48:25 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5548  data_time: 0.0025  memory: 2402  
+2025/05/12 19:48:53 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5551  data_time: 0.0025  memory: 2402  
+2025/05/12 19:48:53 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:48:58 - mmengine - INFO - bbox_mAP_copypaste: 0.216 0.488 0.167 0.044 0.186 0.363
+2025/05/12 19:48:58 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:48:58 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2160  coco/bbox_mAP_50: 0.4880  coco/bbox_mAP_75: 0.1670  coco/bbox_mAP_s: 0.0440  coco/bbox_mAP_m: 0.1860  coco/bbox_mAP_l: 0.3630  data_time: 0.0035  time: 0.5550
+2025/05/12 19:49:28 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5656  data_time: 0.0140  memory: 2402  
+2025/05/12 19:49:55 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 19:50:23 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 19:50:51 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 19:51:18 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5538  data_time: 0.0025  memory: 2402  
+2025/05/12 19:51:46 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 19:52:14 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 19:52:42 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 19:53:09 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5551  data_time: 0.0026  memory: 2402  
+2025/05/12 19:53:37 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5551  data_time: 0.0024  memory: 2402  
+2025/05/12 19:53:37 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:53:42 - mmengine - INFO - bbox_mAP_copypaste: 0.198 0.457 0.152 0.040 0.173 0.347
+2025/05/12 19:53:43 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:53:43 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1980  coco/bbox_mAP_50: 0.4570  coco/bbox_mAP_75: 0.1520  coco/bbox_mAP_s: 0.0400  coco/bbox_mAP_m: 0.1730  coco/bbox_mAP_l: 0.3470  data_time: 0.0037  time: 0.5553
+2025/05/12 19:54:13 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:21  time: 0.5810  data_time: 0.0293  memory: 2402  
+2025/05/12 19:54:41 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5537  data_time: 0.0027  memory: 2402  
+2025/05/12 19:55:08 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5537  data_time: 0.0027  memory: 2402  
+2025/05/12 19:55:36 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 19:56:04 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5541  data_time: 0.0027  memory: 2402  
+2025/05/12 19:56:31 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 19:56:59 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 19:57:27 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5551  data_time: 0.0027  memory: 2402  
+2025/05/12 19:57:55 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0027  memory: 2402  
+2025/05/12 19:58:22 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 19:58:23 - mmengine - INFO - Evaluating bbox...
+2025/05/12 19:58:28 - mmengine - INFO - bbox_mAP_copypaste: 0.240 0.540 0.183 0.061 0.208 0.393
+2025/05/12 19:58:28 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 19:58:28 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2400  coco/bbox_mAP_50: 0.5400  coco/bbox_mAP_75: 0.1830  coco/bbox_mAP_s: 0.0610  coco/bbox_mAP_m: 0.2080  coco/bbox_mAP_l: 0.3930  data_time: 0.0053  time: 0.5571
+2025/05/12 19:58:58 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:21  time: 0.5800  data_time: 0.0288  memory: 2402  
+2025/05/12 19:59:26 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5533  data_time: 0.0027  memory: 2402  
+2025/05/12 19:59:53 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5532  data_time: 0.0026  memory: 2402  
+2025/05/12 20:00:21 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 20:00:49 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 20:01:17 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 20:01:44 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 20:02:12 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 20:02:40 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0027  memory: 2402  
+2025/05/12 20:03:08 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 20:03:08 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:03:13 - mmengine - INFO - bbox_mAP_copypaste: 0.236 0.537 0.178 0.058 0.203 0.394
+2025/05/12 20:03:13 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:03:13 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2360  coco/bbox_mAP_50: 0.5370  coco/bbox_mAP_75: 0.1780  coco/bbox_mAP_s: 0.0580  coco/bbox_mAP_m: 0.2030  coco/bbox_mAP_l: 0.3940  data_time: 0.0052  time: 0.5568
+2025/05/12 20:03:43 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:21  time: 0.5802  data_time: 0.0287  memory: 2402  
+2025/05/12 20:04:11 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5534  data_time: 0.0027  memory: 2402  
+2025/05/12 20:04:39 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5533  data_time: 0.0026  memory: 2402  
+2025/05/12 20:05:06 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5535  data_time: 0.0026  memory: 2402  
+2025/05/12 20:05:34 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5540  data_time: 0.0026  memory: 2402  
+2025/05/12 20:06:02 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 20:06:29 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 20:06:57 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5552  data_time: 0.0026  memory: 2402  
+2025/05/12 20:07:25 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0026  memory: 2402  
+2025/05/12 20:07:53 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 20:07:53 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:07:58 - mmengine - INFO - bbox_mAP_copypaste: 0.234 0.537 0.173 0.056 0.202 0.396
+2025/05/12 20:07:58 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:07:58 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2340  coco/bbox_mAP_50: 0.5370  coco/bbox_mAP_75: 0.1730  coco/bbox_mAP_s: 0.0560  coco/bbox_mAP_m: 0.2020  coco/bbox_mAP_l: 0.3960  data_time: 0.0052  time: 0.5569
+2025/05/12 20:08:28 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:21  time: 0.5804  data_time: 0.0287  memory: 2402  
+2025/05/12 20:08:56 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5540  data_time: 0.0028  memory: 2402  
+2025/05/12 20:09:24 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5538  data_time: 0.0027  memory: 2402  
+2025/05/12 20:09:52 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5539  data_time: 0.0026  memory: 2402  
+2025/05/12 20:10:19 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 20:10:47 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 20:11:15 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 20:11:42 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 20:12:10 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 20:12:38 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0026  memory: 2402  
+2025/05/12 20:12:38 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:12:43 - mmengine - INFO - bbox_mAP_copypaste: 0.228 0.519 0.168 0.051 0.185 0.392
+2025/05/12 20:12:44 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:12:44 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2280  coco/bbox_mAP_50: 0.5190  coco/bbox_mAP_75: 0.1680  coco/bbox_mAP_s: 0.0510  coco/bbox_mAP_m: 0.1850  coco/bbox_mAP_l: 0.3920  data_time: 0.0052  time: 0.5571
+2025/05/12 20:13:14 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:21  time: 0.5805  data_time: 0.0287  memory: 2402  
+2025/05/12 20:13:41 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:46  time: 0.5539  data_time: 0.0028  memory: 2402  
+2025/05/12 20:14:09 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:16  time: 0.5538  data_time: 0.0027  memory: 2402  
+2025/05/12 20:14:37 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5540  data_time: 0.0027  memory: 2402  
+2025/05/12 20:15:04 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5542  data_time: 0.0027  memory: 2402  
+2025/05/12 20:15:32 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5545  data_time: 0.0027  memory: 2402  
+2025/05/12 20:16:00 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 20:16:28 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5553  data_time: 0.0027  memory: 2402  
+2025/05/12 20:16:56 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5554  data_time: 0.0027  memory: 2402  
+2025/05/12 20:17:23 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5558  data_time: 0.0026  memory: 2402  
+2025/05/12 20:17:24 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:17:29 - mmengine - INFO - bbox_mAP_copypaste: 0.220 0.515 0.164 0.044 0.183 0.386
+2025/05/12 20:17:29 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:17:29 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2200  coco/bbox_mAP_50: 0.5150  coco/bbox_mAP_75: 0.1640  coco/bbox_mAP_s: 0.0440  coco/bbox_mAP_m: 0.1830  coco/bbox_mAP_l: 0.3860  data_time: 0.0053  time: 0.5572
+2025/05/12 20:17:58 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:14  time: 0.5646  data_time: 0.0126  memory: 2402  
+2025/05/12 20:18:26 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5542  data_time: 0.0027  memory: 2402  
+2025/05/12 20:18:54 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5542  data_time: 0.0028  memory: 2402  
+2025/05/12 20:19:21 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:47  time: 0.5545  data_time: 0.0028  memory: 2402  
+2025/05/12 20:19:49 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0026  memory: 2402  
+2025/05/12 20:20:17 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5539  data_time: 0.0025  memory: 2402  
+2025/05/12 20:20:45 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 20:21:12 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 20:21:40 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 20:22:08 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5552  data_time: 0.0025  memory: 2402  
+2025/05/12 20:22:08 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:22:13 - mmengine - INFO - bbox_mAP_copypaste: 0.238 0.537 0.178 0.058 0.212 0.386
+2025/05/12 20:22:13 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:22:13 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2380  coco/bbox_mAP_50: 0.5370  coco/bbox_mAP_75: 0.1780  coco/bbox_mAP_s: 0.0580  coco/bbox_mAP_m: 0.2120  coco/bbox_mAP_l: 0.3860  data_time: 0.0036  time: 0.5554
+2025/05/12 20:22:43 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5637  data_time: 0.0121  memory: 2402  
+2025/05/12 20:23:10 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5538  data_time: 0.0027  memory: 2402  
+2025/05/12 20:23:38 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 20:24:06 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 20:24:33 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 20:25:01 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 20:25:29 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 20:25:57 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 20:26:24 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 20:26:52 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 20:26:52 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:26:57 - mmengine - INFO - bbox_mAP_copypaste: 0.235 0.537 0.165 0.057 0.208 0.381
+2025/05/12 20:26:58 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:26:58 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2350  coco/bbox_mAP_50: 0.5370  coco/bbox_mAP_75: 0.1650  coco/bbox_mAP_s: 0.0570  coco/bbox_mAP_m: 0.2080  coco/bbox_mAP_l: 0.3810  data_time: 0.0035  time: 0.5552
+2025/05/12 20:27:27 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5644  data_time: 0.0124  memory: 2402  
+2025/05/12 20:27:55 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5535  data_time: 0.0027  memory: 2402  
+2025/05/12 20:28:22 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5536  data_time: 0.0027  memory: 2402  
+2025/05/12 20:28:50 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5542  data_time: 0.0027  memory: 2402  
+2025/05/12 20:29:18 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5541  data_time: 0.0026  memory: 2402  
+2025/05/12 20:29:45 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 20:30:13 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 20:30:41 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5545  data_time: 0.0026  memory: 2402  
+2025/05/12 20:31:09 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5553  data_time: 0.0027  memory: 2402  
+2025/05/12 20:31:36 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5549  data_time: 0.0024  memory: 2402  
+2025/05/12 20:31:37 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:31:42 - mmengine - INFO - bbox_mAP_copypaste: 0.229 0.521 0.168 0.049 0.195 0.379
+2025/05/12 20:31:42 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:31:42 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2290  coco/bbox_mAP_50: 0.5210  coco/bbox_mAP_75: 0.1680  coco/bbox_mAP_s: 0.0490  coco/bbox_mAP_m: 0.1950  coco/bbox_mAP_l: 0.3790  data_time: 0.0036  time: 0.5553
+2025/05/12 20:32:11 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5637  data_time: 0.0124  memory: 2402  
+2025/05/12 20:32:39 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5532  data_time: 0.0026  memory: 2402  
+2025/05/12 20:33:06 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 20:33:34 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5532  data_time: 0.0026  memory: 2402  
+2025/05/12 20:34:02 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5535  data_time: 0.0025  memory: 2402  
+2025/05/12 20:34:30 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5539  data_time: 0.0025  memory: 2402  
+2025/05/12 20:34:57 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 20:35:25 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 20:35:53 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5547  data_time: 0.0026  memory: 2402  
+2025/05/12 20:36:20 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5546  data_time: 0.0025  memory: 2402  
+2025/05/12 20:36:21 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:36:26 - mmengine - INFO - bbox_mAP_copypaste: 0.207 0.483 0.158 0.033 0.172 0.357
+2025/05/12 20:36:26 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:36:26 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2070  coco/bbox_mAP_50: 0.4830  coco/bbox_mAP_75: 0.1580  coco/bbox_mAP_s: 0.0330  coco/bbox_mAP_m: 0.1720  coco/bbox_mAP_l: 0.3570  data_time: 0.0035  time: 0.5548
+2025/05/12 20:36:55 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5634  data_time: 0.0123  memory: 2402  
+2025/05/12 20:37:23 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5531  data_time: 0.0026  memory: 2402  
+2025/05/12 20:37:51 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5532  data_time: 0.0026  memory: 2402  
+2025/05/12 20:38:18 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 20:38:46 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 20:39:14 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5537  data_time: 0.0025  memory: 2402  
+2025/05/12 20:39:41 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5540  data_time: 0.0025  memory: 2402  
+2025/05/12 20:40:09 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5543  data_time: 0.0026  memory: 2402  
+2025/05/12 20:40:37 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5548  data_time: 0.0026  memory: 2402  
+2025/05/12 20:41:04 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5546  data_time: 0.0024  memory: 2402  
+2025/05/12 20:41:05 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:41:10 - mmengine - INFO - bbox_mAP_copypaste: 0.167 0.396 0.121 0.018 0.119 0.315
+2025/05/12 20:41:10 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:41:10 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1670  coco/bbox_mAP_50: 0.3960  coco/bbox_mAP_75: 0.1210  coco/bbox_mAP_s: 0.0180  coco/bbox_mAP_m: 0.1190  coco/bbox_mAP_l: 0.3150  data_time: 0.0035  time: 0.5548
+2025/05/12 20:41:40 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:24  time: 0.5873  data_time: 0.0353  memory: 2402  
+2025/05/12 20:42:08 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:48  time: 0.5547  data_time: 0.0035  memory: 2402  
+2025/05/12 20:42:36 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5550  data_time: 0.0035  memory: 2402  
+2025/05/12 20:43:04 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5550  data_time: 0.0033  memory: 2402  
+2025/05/12 20:43:32 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:20  time: 0.5553  data_time: 0.0034  memory: 2402  
+2025/05/12 20:43:59 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:52  time: 0.5556  data_time: 0.0033  memory: 2402  
+2025/05/12 20:44:27 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5569  data_time: 0.0037  memory: 2402  
+2025/05/12 20:44:55 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5563  data_time: 0.0034  memory: 2402  
+2025/05/12 20:45:23 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5568  data_time: 0.0037  memory: 2402  
+2025/05/12 20:45:51 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5573  data_time: 0.0036  memory: 2402  
+2025/05/12 20:45:51 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:45:56 - mmengine - INFO - bbox_mAP_copypaste: 0.239 0.527 0.179 0.063 0.214 0.392
+2025/05/12 20:45:56 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:45:57 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2390  coco/bbox_mAP_50: 0.5270  coco/bbox_mAP_75: 0.1790  coco/bbox_mAP_s: 0.0630  coco/bbox_mAP_m: 0.2140  coco/bbox_mAP_l: 0.3920  data_time: 0.0067  time: 0.5590
+2025/05/12 20:46:27 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:23  time: 0.5857  data_time: 0.0335  memory: 2402  
+2025/05/12 20:46:55 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:48  time: 0.5554  data_time: 0.0035  memory: 2402  
+2025/05/12 20:47:22 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5541  data_time: 0.0030  memory: 2402  
+2025/05/12 20:47:50 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5542  data_time: 0.0029  memory: 2402  
+2025/05/12 20:48:18 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:20  time: 0.5548  data_time: 0.0030  memory: 2402  
+2025/05/12 20:48:46 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5554  data_time: 0.0031  memory: 2402  
+2025/05/12 20:49:13 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5553  data_time: 0.0030  memory: 2402  
+2025/05/12 20:49:41 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5552  data_time: 0.0028  memory: 2402  
+2025/05/12 20:50:09 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5557  data_time: 0.0031  memory: 2402  
+2025/05/12 20:50:37 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5560  data_time: 0.0029  memory: 2402  
+2025/05/12 20:50:37 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:50:42 - mmengine - INFO - bbox_mAP_copypaste: 0.235 0.519 0.173 0.067 0.208 0.386
+2025/05/12 20:50:43 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:50:43 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2350  coco/bbox_mAP_50: 0.5190  coco/bbox_mAP_75: 0.1730  coco/bbox_mAP_s: 0.0670  coco/bbox_mAP_m: 0.2080  coco/bbox_mAP_l: 0.3860  data_time: 0.0061  time: 0.5582
+2025/05/12 20:51:13 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:23  time: 0.5845  data_time: 0.0314  memory: 2402  
+2025/05/12 20:51:41 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:47  time: 0.5544  data_time: 0.0032  memory: 2402  
+2025/05/12 20:52:09 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5544  data_time: 0.0032  memory: 2402  
+2025/05/12 20:52:36 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5553  data_time: 0.0035  memory: 2402  
+2025/05/12 20:53:04 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:20  time: 0.5552  data_time: 0.0034  memory: 2402  
+2025/05/12 20:53:32 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5559  data_time: 0.0036  memory: 2402  
+2025/05/12 20:54:00 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5556  data_time: 0.0033  memory: 2402  
+2025/05/12 20:54:27 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5558  data_time: 0.0033  memory: 2402  
+2025/05/12 20:54:55 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5559  data_time: 0.0034  memory: 2402  
+2025/05/12 20:55:23 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5571  data_time: 0.0035  memory: 2402  
+2025/05/12 20:55:24 - mmengine - INFO - Evaluating bbox...
+2025/05/12 20:55:29 - mmengine - INFO - bbox_mAP_copypaste: 0.233 0.524 0.170 0.053 0.203 0.389
+2025/05/12 20:55:29 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 20:55:29 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2330  coco/bbox_mAP_50: 0.5240  coco/bbox_mAP_75: 0.1700  coco/bbox_mAP_s: 0.0530  coco/bbox_mAP_m: 0.2030  coco/bbox_mAP_l: 0.3890  data_time: 0.0062  time: 0.5584
+2025/05/12 20:55:59 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:22  time: 0.5829  data_time: 0.0309  memory: 2402  
+2025/05/12 20:56:27 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:47  time: 0.5556  data_time: 0.0038  memory: 2402  
+2025/05/12 20:56:55 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5551  data_time: 0.0034  memory: 2402  
+2025/05/12 20:57:23 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5552  data_time: 0.0034  memory: 2402  
+2025/05/12 20:57:50 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:20  time: 0.5553  data_time: 0.0034  memory: 2402  
+2025/05/12 20:58:18 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5557  data_time: 0.0034  memory: 2402  
+2025/05/12 20:58:46 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5564  data_time: 0.0036  memory: 2402  
+2025/05/12 20:59:14 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5574  data_time: 0.0040  memory: 2402  
+2025/05/12 20:59:42 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5578  data_time: 0.0040  memory: 2402  
+2025/05/12 21:00:10 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5573  data_time: 0.0037  memory: 2402  
+2025/05/12 21:00:10 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:00:15 - mmengine - INFO - bbox_mAP_copypaste: 0.235 0.522 0.162 0.056 0.200 0.387
+2025/05/12 21:00:16 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:00:16 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2350  coco/bbox_mAP_50: 0.5220  coco/bbox_mAP_75: 0.1620  coco/bbox_mAP_s: 0.0560  coco/bbox_mAP_m: 0.2000  coco/bbox_mAP_l: 0.3870  data_time: 0.0064  time: 0.5589
+2025/05/12 21:00:46 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:23  time: 0.5856  data_time: 0.0339  memory: 2402  
+2025/05/12 21:01:14 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:47  time: 0.5534  data_time: 0.0028  memory: 2402  
+2025/05/12 21:01:41 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:17  time: 0.5531  data_time: 0.0027  memory: 2402  
+2025/05/12 21:02:09 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:48  time: 0.5534  data_time: 0.0027  memory: 2402  
+2025/05/12 21:02:37 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5538  data_time: 0.0027  memory: 2402  
+2025/05/12 21:03:05 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5540  data_time: 0.0026  memory: 2402  
+2025/05/12 21:03:32 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5546  data_time: 0.0027  memory: 2402  
+2025/05/12 21:04:00 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5546  data_time: 0.0027  memory: 2402  
+2025/05/12 21:04:28 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5549  data_time: 0.0027  memory: 2402  
+2025/05/12 21:04:56 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5557  data_time: 0.0027  memory: 2402  
+2025/05/12 21:04:56 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:05:01 - mmengine - INFO - bbox_mAP_copypaste: 0.231 0.508 0.181 0.055 0.195 0.389
+2025/05/12 21:05:01 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:05:01 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2310  coco/bbox_mAP_50: 0.5080  coco/bbox_mAP_75: 0.1810  coco/bbox_mAP_s: 0.0550  coco/bbox_mAP_m: 0.1950  coco/bbox_mAP_l: 0.3890  data_time: 0.0058  time: 0.5573
+2025/05/12 21:05:31 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:13  time: 0.5636  data_time: 0.0120  memory: 2402  
+2025/05/12 21:05:58 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5544  data_time: 0.0031  memory: 2402  
+2025/05/12 21:06:26 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:15  time: 0.5541  data_time: 0.0031  memory: 2402  
+2025/05/12 21:06:54 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5543  data_time: 0.0030  memory: 2402  
+2025/05/12 21:07:22 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:19  time: 0.5539  data_time: 0.0028  memory: 2402  
+2025/05/12 21:07:49 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:51  time: 0.5547  data_time: 0.0028  memory: 2402  
+2025/05/12 21:08:17 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5549  data_time: 0.0030  memory: 2402  
+2025/05/12 21:08:45 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5551  data_time: 0.0030  memory: 2402  
+2025/05/12 21:09:13 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5556  data_time: 0.0030  memory: 2402  
+2025/05/12 21:09:40 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5559  data_time: 0.0028  memory: 2402  
+2025/05/12 21:09:41 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:09:46 - mmengine - INFO - bbox_mAP_copypaste: 0.218 0.492 0.161 0.041 0.179 0.382
+2025/05/12 21:09:46 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:09:46 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2180  coco/bbox_mAP_50: 0.4920  coco/bbox_mAP_75: 0.1610  coco/bbox_mAP_s: 0.0410  coco/bbox_mAP_m: 0.1790  coco/bbox_mAP_l: 0.3820  data_time: 0.0038  time: 0.5557
+2025/05/12 21:10:15 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5609  data_time: 0.0096  memory: 2402  
+2025/05/12 21:10:43 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5534  data_time: 0.0025  memory: 2402  
+2025/05/12 21:11:11 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5536  data_time: 0.0025  memory: 2402  
+2025/05/12 21:11:38 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5533  data_time: 0.0025  memory: 2402  
+2025/05/12 21:12:06 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5542  data_time: 0.0026  memory: 2402  
+2025/05/12 21:12:34 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5538  data_time: 0.0024  memory: 2402  
+2025/05/12 21:13:02 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5539  data_time: 0.0024  memory: 2402  
+2025/05/12 21:13:29 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5541  data_time: 0.0024  memory: 2402  
+2025/05/12 21:13:57 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5545  data_time: 0.0025  memory: 2402  
+2025/05/12 21:14:25 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5548  data_time: 0.0024  memory: 2402  
+2025/05/12 21:14:25 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:14:30 - mmengine - INFO - bbox_mAP_copypaste: 0.216 0.493 0.162 0.035 0.172 0.378
+2025/05/12 21:14:30 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:14:30 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.2160  coco/bbox_mAP_50: 0.4930  coco/bbox_mAP_75: 0.1620  coco/bbox_mAP_s: 0.0350  coco/bbox_mAP_m: 0.1720  coco/bbox_mAP_l: 0.3780  data_time: 0.0032  time: 0.5547
+2025/05/12 21:15:00 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5604  data_time: 0.0095  memory: 2402  
+2025/05/12 21:15:27 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5530  data_time: 0.0023  memory: 2402  
+2025/05/12 21:15:55 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5521  data_time: 0.0021  memory: 2402  
+2025/05/12 21:16:22 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5526  data_time: 0.0021  memory: 2402  
+2025/05/12 21:16:50 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5529  data_time: 0.0022  memory: 2402  
+2025/05/12 21:17:18 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5531  data_time: 0.0021  memory: 2402  
+2025/05/12 21:17:45 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5535  data_time: 0.0022  memory: 2402  
+2025/05/12 21:18:13 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5538  data_time: 0.0022  memory: 2402  
+2025/05/12 21:18:41 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5542  data_time: 0.0023  memory: 2402  
+2025/05/12 21:19:09 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5547  data_time: 0.0023  memory: 2402  
+2025/05/12 21:19:09 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:19:14 - mmengine - INFO - bbox_mAP_copypaste: 0.194 0.459 0.145 0.024 0.152 0.358
+2025/05/12 21:19:14 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:19:14 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1940  coco/bbox_mAP_50: 0.4590  coco/bbox_mAP_75: 0.1450  coco/bbox_mAP_s: 0.0240  coco/bbox_mAP_m: 0.1520  coco/bbox_mAP_l: 0.3580  data_time: 0.0029  time: 0.5540
+2025/05/12 21:19:43 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5609  data_time: 0.0098  memory: 2402  
+2025/05/12 21:20:11 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5524  data_time: 0.0022  memory: 2402  
+2025/05/12 21:20:39 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5523  data_time: 0.0022  memory: 2402  
+2025/05/12 21:21:06 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5526  data_time: 0.0022  memory: 2402  
+2025/05/12 21:21:34 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5530  data_time: 0.0023  memory: 2402  
+2025/05/12 21:22:02 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5534  data_time: 0.0023  memory: 2402  
+2025/05/12 21:22:29 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5541  data_time: 0.0023  memory: 2402  
+2025/05/12 21:22:57 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5544  data_time: 0.0024  memory: 2402  
+2025/05/12 21:23:25 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5545  data_time: 0.0024  memory: 2402  
+2025/05/12 21:23:53 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5553  data_time: 0.0025  memory: 2402  
+2025/05/12 21:23:53 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:23:58 - mmengine - INFO - bbox_mAP_copypaste: 0.178 0.421 0.136 0.016 0.123 0.343
+2025/05/12 21:23:58 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:23:58 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1780  coco/bbox_mAP_50: 0.4210  coco/bbox_mAP_75: 0.1360  coco/bbox_mAP_s: 0.0160  coco/bbox_mAP_m: 0.1230  coco/bbox_mAP_l: 0.3430  data_time: 0.0030  time: 0.5543
+2025/05/12 21:24:28 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5615  data_time: 0.0098  memory: 2402  
+2025/05/12 21:24:55 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5529  data_time: 0.0024  memory: 2402  
+2025/05/12 21:25:23 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 21:25:51 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5530  data_time: 0.0024  memory: 2402  
+2025/05/12 21:26:18 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5531  data_time: 0.0023  memory: 2402  
+2025/05/12 21:26:46 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5541  data_time: 0.0025  memory: 2402  
+2025/05/12 21:27:14 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5541  data_time: 0.0024  memory: 2402  
+2025/05/12 21:27:41 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 21:28:09 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5545  data_time: 0.0024  memory: 2402  
+2025/05/12 21:28:37 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5545  data_time: 0.0023  memory: 2402  
+2025/05/12 21:28:37 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:28:42 - mmengine - INFO - bbox_mAP_copypaste: 0.147 0.330 0.115 0.009 0.081 0.298
+2025/05/12 21:28:43 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:28:43 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1470  coco/bbox_mAP_50: 0.3300  coco/bbox_mAP_75: 0.1150  coco/bbox_mAP_s: 0.0090  coco/bbox_mAP_m: 0.0810  coco/bbox_mAP_l: 0.2980  data_time: 0.0032  time: 0.5545
+2025/05/12 21:29:12 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5616  data_time: 0.0099  memory: 2402  
+2025/05/12 21:29:39 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:43  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 21:30:07 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5534  data_time: 0.0026  memory: 2402  
+2025/05/12 21:30:35 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5536  data_time: 0.0026  memory: 2402  
+2025/05/12 21:31:02 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5537  data_time: 0.0026  memory: 2402  
+2025/05/12 21:31:30 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5534  data_time: 0.0024  memory: 2402  
+2025/05/12 21:31:58 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5543  data_time: 0.0025  memory: 2402  
+2025/05/12 21:32:26 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5545  data_time: 0.0025  memory: 2402  
+2025/05/12 21:32:53 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5550  data_time: 0.0026  memory: 2402  
+2025/05/12 21:33:21 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5549  data_time: 0.0025  memory: 2402  
+2025/05/12 21:33:21 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:33:26 - mmengine - INFO - bbox_mAP_copypaste: 0.197 0.463 0.146 0.026 0.156 0.352
+2025/05/12 21:33:27 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:33:27 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1970  coco/bbox_mAP_50: 0.4630  coco/bbox_mAP_75: 0.1460  coco/bbox_mAP_s: 0.0260  coco/bbox_mAP_m: 0.1560  coco/bbox_mAP_l: 0.3520  data_time: 0.0033  time: 0.5548
+2025/05/12 21:33:56 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5609  data_time: 0.0102  memory: 2402  
+2025/05/12 21:34:23 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5523  data_time: 0.0024  memory: 2402  
+2025/05/12 21:34:51 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5522  data_time: 0.0023  memory: 2402  
+2025/05/12 21:35:19 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5523  data_time: 0.0023  memory: 2402  
+2025/05/12 21:35:46 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5532  data_time: 0.0024  memory: 2402  
+2025/05/12 21:36:14 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5532  data_time: 0.0023  memory: 2402  
+2025/05/12 21:36:42 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5536  data_time: 0.0023  memory: 2402  
+2025/05/12 21:37:09 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5543  data_time: 0.0024  memory: 2402  
+2025/05/12 21:37:37 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5540  data_time: 0.0023  memory: 2402  
+2025/05/12 21:38:05 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5545  data_time: 0.0023  memory: 2402  
+2025/05/12 21:38:05 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:38:10 - mmengine - INFO - bbox_mAP_copypaste: 0.185 0.428 0.150 0.020 0.134 0.337
+2025/05/12 21:38:11 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:38:11 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1850  coco/bbox_mAP_50: 0.4280  coco/bbox_mAP_75: 0.1500  coco/bbox_mAP_s: 0.0200  coco/bbox_mAP_m: 0.1340  coco/bbox_mAP_l: 0.3370  data_time: 0.0031  time: 0.5541
+2025/05/12 21:38:40 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5610  data_time: 0.0099  memory: 2402  
+2025/05/12 21:39:07 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5531  data_time: 0.0025  memory: 2402  
+2025/05/12 21:39:35 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5527  data_time: 0.0024  memory: 2402  
+2025/05/12 21:40:03 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5528  data_time: 0.0024  memory: 2402  
+2025/05/12 21:40:30 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5534  data_time: 0.0025  memory: 2402  
+2025/05/12 21:40:58 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5535  data_time: 0.0024  memory: 2402  
+2025/05/12 21:41:26 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5535  data_time: 0.0022  memory: 2402  
+2025/05/12 21:41:53 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5538  data_time: 0.0023  memory: 2402  
+2025/05/12 21:42:21 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5541  data_time: 0.0023  memory: 2402  
+2025/05/12 21:42:49 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5544  data_time: 0.0023  memory: 2402  
+2025/05/12 21:42:49 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:42:54 - mmengine - INFO - bbox_mAP_copypaste: 0.178 0.413 0.150 0.018 0.122 0.332
+2025/05/12 21:42:54 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:42:54 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1780  coco/bbox_mAP_50: 0.4130  coco/bbox_mAP_75: 0.1500  coco/bbox_mAP_s: 0.0180  coco/bbox_mAP_m: 0.1220  coco/bbox_mAP_l: 0.3320  data_time: 0.0031  time: 0.5542
+2025/05/12 21:43:24 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5610  data_time: 0.0097  memory: 2402  
+2025/05/12 21:43:51 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5525  data_time: 0.0024  memory: 2402  
+2025/05/12 21:44:19 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5522  data_time: 0.0023  memory: 2402  
+2025/05/12 21:44:46 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5523  data_time: 0.0023  memory: 2402  
+2025/05/12 21:45:14 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5526  data_time: 0.0023  memory: 2402  
+2025/05/12 21:45:42 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5529  data_time: 0.0022  memory: 2402  
+2025/05/12 21:46:09 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5534  data_time: 0.0023  memory: 2402  
+2025/05/12 21:46:37 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5538  data_time: 0.0023  memory: 2402  
+2025/05/12 21:47:05 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5541  data_time: 0.0023  memory: 2402  
+2025/05/12 21:47:32 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5541  data_time: 0.0023  memory: 2402  
+2025/05/12 21:47:33 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:47:38 - mmengine - INFO - bbox_mAP_copypaste: 0.154 0.356 0.117 0.012 0.096 0.300
+2025/05/12 21:47:38 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:47:38 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1540  coco/bbox_mAP_50: 0.3560  coco/bbox_mAP_75: 0.1170  coco/bbox_mAP_s: 0.0120  coco/bbox_mAP_m: 0.0960  coco/bbox_mAP_l: 0.3000  data_time: 0.0030  time: 0.5539
+2025/05/12 21:48:07 - mmengine - INFO - Epoch(test) [ 50/500]    eta: 0:04:12  time: 0.5611  data_time: 0.0098  memory: 2402  
+2025/05/12 21:48:35 - mmengine - INFO - Epoch(test) [100/500]    eta: 0:03:42  time: 0.5533  data_time: 0.0027  memory: 2402  
+2025/05/12 21:49:03 - mmengine - INFO - Epoch(test) [150/500]    eta: 0:03:14  time: 0.5531  data_time: 0.0026  memory: 2402  
+2025/05/12 21:49:30 - mmengine - INFO - Epoch(test) [200/500]    eta: 0:02:46  time: 0.5530  data_time: 0.0025  memory: 2402  
+2025/05/12 21:49:58 - mmengine - INFO - Epoch(test) [250/500]    eta: 0:02:18  time: 0.5540  data_time: 0.0027  memory: 2402  
+2025/05/12 21:50:26 - mmengine - INFO - Epoch(test) [300/500]    eta: 0:01:50  time: 0.5551  data_time: 0.0029  memory: 2402  
+2025/05/12 21:50:53 - mmengine - INFO - Epoch(test) [350/500]    eta: 0:01:23  time: 0.5550  data_time: 0.0027  memory: 2402  
+2025/05/12 21:51:21 - mmengine - INFO - Epoch(test) [400/500]    eta: 0:00:55  time: 0.5549  data_time: 0.0026  memory: 2402  
+2025/05/12 21:51:49 - mmengine - INFO - Epoch(test) [450/500]    eta: 0:00:27  time: 0.5546  data_time: 0.0026  memory: 2402  
+2025/05/12 21:52:17 - mmengine - INFO - Epoch(test) [500/500]    eta: 0:00:00  time: 0.5544  data_time: 0.0024  memory: 2402  
+2025/05/12 21:52:17 - mmengine - INFO - Evaluating bbox...
+2025/05/12 21:52:22 - mmengine - INFO - bbox_mAP_copypaste: 0.123 0.282 0.101 0.008 0.066 0.251
+2025/05/12 21:52:22 - mmengine - INFO - Results has been saved to /mnt/workspace/richard/202505/cityscapes/cauvis_fasterrcnn/test_results_epoch_12.pkl.
+2025/05/12 21:52:22 - mmengine - INFO - Epoch(test) [500/500]    coco/bbox_mAP: 0.1230  coco/bbox_mAP_50: 0.2820  coco/bbox_mAP_75: 0.1010  coco/bbox_mAP_s: 0.0080  coco/bbox_mAP_m: 0.0660  coco/bbox_mAP_l: 0.2510  data_time: 0.0034  time: 0.5549
